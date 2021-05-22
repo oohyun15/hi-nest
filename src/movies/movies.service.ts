@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { exception } from 'console';
 import { Movie } from './entities/movie.entity';
 import { CreateMovieDto } from './dto/create-movie.dto';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
 @Injectable()
 export class MoviesService {
@@ -25,11 +26,11 @@ export class MoviesService {
 
   // Since it doesn't use any database,
   // memory contains the movie data temporary.
-  update(id: number, updateData): Movie {
+  update(id: number, updateData: UpdateMovieDto): Movie {
     const movie = this.show(id);
     if (updateData.title !== undefined) movie.title = updateData.title;
     if (updateData.year !== undefined) movie.year = updateData.year;
-    if (updateData.gernes !== undefined) movie.gernes = updateData.gernes;
+    if (updateData.genres !== undefined) movie.genres = updateData.genres;
     return movie;
   }
 

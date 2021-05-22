@@ -2,12 +2,12 @@ export class Movie {
   "id": number;
   "title": string;
   "year": number;
-  "gernes": string[];
+  "genres": string[];
 
-  constructor(id: number, title: string, year: number, gernes: string[]) {
+  constructor(id: number, title: string, year: number, genres: string[]) {
     this.id = id;
     this.title = title;
     this.year = year;
-    this.gernes = gernes;
+    this.genres = genres;
   }
 }
