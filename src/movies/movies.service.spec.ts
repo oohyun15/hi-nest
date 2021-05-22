@@ -15,4 +15,27 @@ describe("MoviesService", () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  describe("index()", () => {
+    it("should return an array", () => {
+      const result = service.index();
+      expect(result).toBeInstanceOf(Array);
+    });
+  });
+
+  describe("show()", () => {
+    it("should return a movie", () => {
+      service.create({
+        title: "Test Movie",
+        genres: ["test genre"],
+        year: 2021,
+      });
+
+      const movie = service.show(1);
+      expect(movie).toBeDefined();
+      expect(movie.title).toEqual("Test Movie");
+      expect(movie.genres).toContain("test genre");
+      expect(movie.year).toEqual(2021);
+    });
+  });
 });
