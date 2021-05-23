@@ -1,3 +1,4 @@
+import { NotFoundException } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { MoviesService } from "./movies.service"
 
@@ -30,12 +31,46 @@ describe("MoviesService", () => {
         genres: ["test genre"],
         year: 2021,
       });
-
       const movie = service.show(1);
       expect(movie).toBeDefined();
       expect(movie.title).toEqual("Test Movie");
       expect(movie.genres).toContain("test genre");
       expect(movie.year).toEqual(2021);
+    });
+  });
+
+  describe("create()", () => {
+    it("should create a movie", () => {
+      const beforeCreate = service.index().length;
+      service.create({
+        title: "Test Movie",
+        genres: ["test genre"],
+        year: 2021,
+      });
+      const afterCreate = service.index().length;
+      expect(afterCreate).toBeGreaterThan(beforeCreate);
+    });
+  });
+
+  describe("destroy()", () => {
+    it("shoud deletes a movie", () => {
+      service.create({
+        title: "test",
+        genres: ["test"],
+        year: 2021,
+      });
+      const beforeDelete = service.index().length;
+      service.destroy(1);
+      const afterDelete = service.index().length;
+      expect(afterDelete).toBeLessThan(beforeDelete);
+    });
+
+    it("should return a 404", () => {
+      try {
+        service.destroy(999);
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+      }
     });
   });
 });
